@@ -1,5 +1,6 @@
 import "reflect-metadata";
 
+import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
@@ -17,6 +18,8 @@ async function bootstrap() {
         })
     });
 
+    app.setGlobalPrefix("api/v1/quantam_core");
+
     const options = new DocumentBuilder()
         .setTitle("Quantam Core")
         .setDescription("All OpenAPI specs for Quantam Core")
@@ -29,4 +32,6 @@ async function bootstrap() {
     await app.listen(3000);
 }
 
-bootstrap();
+bootstrap().then(() => {
+    Logger.log("Quantam Core is live!");
+});

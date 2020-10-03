@@ -53,18 +53,19 @@ export function alphaVantageExchange(exchange: ExchangeEnum): string {
     }
 }
 
+export const defaultOpenExchanges: ExchangeEnum[] = [ExchangeEnum.NASDAQ, ExchangeEnum.NYSE, ExchangeEnum.NSE, ExchangeEnum.BSE];
+export const defaultIntraDayIntervals: IntervalEnum[] = [
+    IntervalEnum.ONE_MIN,
+    IntervalEnum.FIVE_MIN,
+    IntervalEnum.FIFTEEN_MIN,
+    IntervalEnum.THIRTY_MIN,
+    IntervalEnum.ONE_HOUR
+];
+
 export class AlphavantageProxyConfig implements IDataProxyConfig {
     openExchanges: ExchangeEnum[];
     intraDayIntervals: IntervalEnum[];
     additionalConfig: Record<string, string>;
-    defaultOpenExchanges: ExchangeEnum[] = [ExchangeEnum.NASDAQ, ExchangeEnum.NYSE, ExchangeEnum.NSE, ExchangeEnum.BSE];
-    defaultIntraDayIntervals: IntervalEnum[] = [
-        IntervalEnum.ONE_MIN,
-        IntervalEnum.FIVE_MIN,
-        IntervalEnum.FIFTEEN_MIN,
-        IntervalEnum.THIRTY_MIN,
-        IntervalEnum.ONE_HOUR
-    ];
 
     constructor(
         openExchanges: ExchangeEnum[] | undefined = undefined,
@@ -72,8 +73,8 @@ export class AlphavantageProxyConfig implements IDataProxyConfig {
         preferredDataType: DataType | undefined,
         preferredOutputSize: OutputSize | undefined
     ) {
-        this.openExchanges = openExchanges !== undefined ? openExchanges : this.defaultOpenExchanges;
-        this.intraDayIntervals = intraDayIntervals !== undefined ? intraDayIntervals : this.defaultIntraDayIntervals;
+        this.openExchanges = openExchanges !== undefined ? openExchanges : defaultOpenExchanges;
+        this.intraDayIntervals = intraDayIntervals !== undefined ? intraDayIntervals : defaultIntraDayIntervals;
         this.additionalConfig = {
             preferredDataType: preferredDataType !== undefined ? preferredDataType.toString() : DataType.JSON.toString(),
             preferredOutputSize: preferredOutputSize !== undefined ? preferredOutputSize.toString() : OutputSize.Compact.toString()
